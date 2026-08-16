@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Profile - TruthLens{% endblock %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="mb-4">
+                        My Profile
+                    </h2>
+                    <div class="mb-3">
+                        <label class="text-muted">
+                            Email
+                        </label>
+                        <h5>
+                            {{ user.email }}
+                        </h5>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted">
+                            Account Type
+                        </label>
+                        <h5>
+                            {% if user.is_superuser %}
+                                Administrator
+                            {% else %}
+                                {{ user.role|title }}
+                            {% endif %}
+                        </h5>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted">
+                            Phone
+                        </label>
+                        <h5>
+                            {{ user.phone|default:"Not provided" }}
+                        </h5>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted">
+                            Member Since
+                        </label>
+                        <h5>
+                            {{ user.created_at|date:"d M Y" }}
+                        </h5>
+                    </div>
+                    <hr>
+                    {% if user.is_superuser %}
+                        <a
+                            href="/administrator/dashboard/"
+                            class="btn btn-dark"
+                        >
+                            Administrator Dashboard
+                        </a>
+                    {% elif user.role == "writer" %}
+                        <a
+                            href="/writer/dashboard/"
+                            class="btn btn-dark"
+                        >
+                            Writer Dashboard
+                        </a>
+                    {% else %}
+                        <a
+                            href="/"
+                            class="btn btn-dark"
+                        >
+                            Browse Articles
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}
+{{ article.title }} - TruthLens
+{% endblock %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-sm">
+                {% if article.image %}
+                    <img
+                        src="{{ article.image.url }}"
+                        class="card-img-top"
+                        style="max-height:450px; object-fit:cover;"
+                    >
+                {% endif %}
+                <div class="card-body p-4">
+                    {% if article.category %}
+                        <span class="badge bg-secondary mb-3">
+                            {{ article.category.name }}
+                        </span>
+                    {% endif %}
+                    <h1 class="fw-bold">
+                        {{ article.title }}
+                    </h1>
+                    <div class="text-muted mb-4">
+                        By {{ article.author.email }}
+
+                        ·
+
+                        {{ article.created_at|date:"d M Y" }}
+
+                        ·
+
+                        {{ article.views }} views
+                    </div>
+                    <hr>
+                    <div class="mt-4 fs-5">
+                        {{ article.content|linebreaks }}
+
+                    </div>
+                    {% if article.status == "published" %}
+                        <hr class="my-4">
+                        <div class="d-flex gap-2">
+                            <form
+                                method="POST"
+                                action="/article/{{ article.id }}/like/"
+                            >
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-danger"
+                                >
+
+                                    {% if liked %}
+                                        ♥ Unlike
+                                    {% else %}
+                                        ♡ Like
+                                    {% endif %}
+                                    ({{ article.likes.count }})
+                                </button>
+                            </form>
+                            <form
+                                method="POST"
+                                action="/article/{{ article.id }}/bookmark/"
+                            >
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-dark"
+                                >
+                                    {% if bookmarked %}
+                                        ★ Bookmarked
+                                    {% else %}
+                                        ☆ Bookmark
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                    {% if article.author == user %}
+                        <hr class="my-4">
+                        <div class="alert alert-light">
+                            <h5>
+                                Article Status
+                            </h5>
+                            <p class="mb-2">
+                                <strong>
+                                    AI Prediction:
+                                </strong>
+                                {% if article.prediction == "real" %}
+                                    <span class="badge bg-success">
+                                        REAL
+                                    </span>
+                                {% elif article.prediction == "fake" %}
+                                    <span class="badge bg-danger">
+                                        FAKE
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        PENDING
+                                    </span>
+                                {% endif %}
+                            </p>
+                            <p class="mb-2">
+                                <strong>
+                                    Status:
+                                </strong>
+                                {{ article.status|title }}
+                            </p>
+
+                            {% if article.prediction_probability %}
+                                <p class="mb-2">
+                                    <strong>
+                                        Prediction Probability:
+                                    </strong>
+                                    {{ article.prediction_probability|floatformat:4 }}
+                                </p>
+                            {% endif %}
+                            {% if article.admin_comment %}
+                                <p class="mb-0">
+                                    <strong>
+                                        Administrator Comment:
+                                    </strong>
+                                    {{ article.admin_comment }}
+                                </p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

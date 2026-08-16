@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Create Article - TruthLens{% endblock %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="mb-2">
+                        Create Article
+                    </h2>
+                    <p class="text-muted mb-4">
+                        Your article will automatically be
+                        analyzed by our fake-news detection model.
+
+                    </p>
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Article Title
+                            </label>
+                            <input
+                                type="text"
+                                name="title"
+                                class="form-control"
+                                placeholder="Enter article title"
+                                maxlength="255"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Category
+                            </label>
+                            <select
+                                name="category"
+                                class="form-select"
+                            >
+                                <option value="">
+                                    Select category
+                                </option>
+                                {% for category in categories %}
+
+                                    <option
+                                        value="{{ category.id }}"
+                                    >
+                                        {{ category.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Article Image
+                            </label>
+                            <input
+                                type="file"
+                                name="image"
+                                class="form-control"
+                                accept="image/*"
+                            >
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Article Content
+                            </label>
+                            <textarea
+                                name="content"
+                                class="form-control"
+                                rows="15"
+                                placeholder="Write your article..."
+                                required
+                            ></textarea>
+                        </div>
+                        <div class="alert alert-info">
+                            <strong>
+                                How verification works:
+                            </strong>
+                            <br>
+                            Your article will first be analyzed
+                            by the AI model.
+                            <br>
+                            If classified as
+                            <strong>REAL</strong>,
+                            it will be published automatically.
+                            <br>
+                            If classified as
+                            <strong>FAKE</strong>,
+                            it will be flagged and sent to the
+                            administrator for review.
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a
+                                href="/writer/dashboard/"
+                                class="btn btn-outline-secondary"
+                            >
+                                Cancel
+                            </a>
+                            <button
+                                type="submit"
+                                class="btn btn-dark"
+                            >
+                                Submit Article
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

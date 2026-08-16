@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Writer Dashboard - TruthLens{% endblock %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Writer Dashboard</h2>
+            <p class="text-muted mb-0">
+                Welcome, {{ user.email }}
+            </p>
+        </div>
+        <a
+            href="/writer/create/"
+            class="btn btn-dark"
+        >
+            + Create Article
+        </a>
+    </div>
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Total Articles
+                    </h6>
+                    <h2>
+                        {{ total_articles }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Published
+                    </h6>
+                    <h2 class="text-success">
+                        {{ published_articles }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Flagged / Under Review
+                    </h6>
+                    <h2 class="text-warning">
+                        {{ flagged_articles }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h4 class="mb-4">
+                My Articles
+            </h4>
+            {% if articles %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>AI Prediction</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for article in articles %}
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            {{ article.title }}
+                                        </strong>
+                                    </td>
+                                    <td>
+                                        {% if article.prediction == "real" %}
+                                            <span class="badge bg-success">
+                                                REAL
+                                            </span>
+                                        {% elif article.prediction == "fake" %}
+                                            <span class="badge bg-danger">
+                                                FAKE
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">
+                                                PENDING
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if article.status == "published" %}
+                                            <span class="badge bg-success">
+                                                Published
+                                            </span>
+                                        {% elif article.status == "flagged" %}
+                                            <span class="badge bg-warning text-dark">
+                                                Under Review
+                                            </span>
+                                        {% elif article.status == "rejected" %}
+                                            <span class="badge bg-danger">
+                                                Rejected
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">
+                                                Pending
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ article.created_at|date:"d M Y" }}
+                                    </td>
+                                    <td>
+                                        <a
+                                            href="/article/{{ article.id }}/"
+                                            class="btn btn-sm btn-outline-dark"
+                                        >
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <h5>
+                        No articles yet.
+                    </h5>
+                    <p class="text-muted">
+                        Create your first article.
+                    </p>
+                    <a
+                        href="/writer/create/"
+                        class="btn btn-dark"
+                    >
+                        Create Article
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

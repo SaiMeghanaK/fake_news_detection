@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Review Article - TruthLens{% endblock %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-sm">
+                {% if article.image %}
+                    <img
+                        src="{{ article.image.url }}"
+                        class="card-img-top"
+                        style="max-height:400px; object-fit:cover;"
+                    >
+                {% endif %}
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <span class="badge bg-danger">
+                            FLAGGED
+                        </span>
+                        <span class="badge bg-warning text-dark">
+                            AI: FAKE
+                        </span>
+                    </div>
+                    <h1 class="fw-bold">
+                        {{ article.title }}
+                    </h1>
+                    <p class="text-muted">
+                        Written by:
+                        <strong>
+                            {{ article.author.email }}
+                        </strong>
+                        <br>
+                        Submitted:
+                        {{ article.created_at|date:"d M Y H:i" }}
+                    </p>
+                    <hr>
+                    <div class="article-content mt-4">
+                        {{ article.content|linebreaks }}
+                    </div>
+                    <hr class="my-4">
+                    <div class="alert alert-danger">
+                        <h5>
+                            AI Detection Result
+                        </h5>
+                        <p class="mb-1">
+                            Prediction:
+                            <strong>
+                                FAKE
+                            </strong>
+                        </p>
+                        <p class="mb-0">
+                            Probability:
+                            <strong>
+                                {{ article.prediction_probability|floatformat:4 }}
+                            </strong>
+                        </p>
+                    </div>
+                    <form
+                        method="POST"
+                        action="/administrator/approve/{{ article.id }}/"
+                        class="mb-3"
+                    >
+                        {% csrf_token %}
+                        <label class="form-label">
+                            Administrator Comment
+                        </label>
+                        <textarea
+                            name="comment"
+                            class="form-control mb-3"
+                            rows="3"
+                            placeholder="Optional approval comment"
+                        ></textarea>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success"
+                        >
+                            ✓ Approve & Publish
+                        </button>
+                    </form>
+                    <form
+                        method="POST"
+                        action="/administrator/reject/{{ article.id }}/"
+                    >
+                        {% csrf_token %}
+                        <label class="form-label">
+                            Rejection Reason
+                        </label>
+                        <textarea
+                            name="comment"
+                            class="form-control mb-3"
+                            rows="3"
+                            placeholder="Enter reason for rejection"
+                            required
+                        ></textarea>
+                        <button
+                            type="submit"
+                            class="btn btn-danger"
+                        >
+                            ✕ Reject Article
+                        </button>
+                    </form>
+                    <div class="mt-4">
+                        <a
+                            href="/administrator/flagged/"
+                            class="btn btn-outline-secondary"
+                        >
+                            Back to Flagged Articles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

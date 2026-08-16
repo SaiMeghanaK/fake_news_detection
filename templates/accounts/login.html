@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">
+                        Welcome Back
+                    </h2>
+                    <p class="text-center text-muted">
+                        Login to get some real news
+                    </p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Email
+                            </label>
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter your email"
+                                required
+                            >
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Enter your password"
+                                required
+                            >
+                        </div>
+                        <button
+                            type="submit"
+                            class="btn btn-dark w-100"
+                        >
+                            Login
+                        </button>
+                    </form>
+                    <div class="text-center mt-3">
+                        Don't have an account?
+                        <a href="/register/">
+                            Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Administrator Dashboard - TruthLens{% endblock %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="mb-4">
+        <h2>
+            Administrator Dashboard
+        </h2>
+        <p class="text-muted">
+            Review and manage articles flagged by the AI system.
+        </p>
+    </div>
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Total Articles
+                    </h6>
+                    <h2>
+                        {{ total_articles }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Published
+                    </h6>
+                    <h2 class="text-success">
+                        {{ published_articles }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Flagged
+                    </h6>
+                    <h2 class="text-warning">
+                        {{ flagged_articles }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Rejected
+                    </h6>
+                    <h2 class="text-danger">
+                        {{ rejected_articles }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-1">
+                        Flagged Articles
+                    </h4>
+                    <p class="text-muted mb-0">
+                        Articles requiring manual review.
+                    </p>
+
+                </div>
+                <a
+                    href="/administrator/flagged/"
+                    class="btn btn-dark"
+                >
+                    Review Flagged Articles
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

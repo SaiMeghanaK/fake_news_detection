@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}TruthLens - Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="display-4 fw-bold">
+                    Read News.
+                    <br>
+                    Know the Truth.
+                </h1>
+                <p class="lead text-muted mt-3">
+                    Our platform uses machine learning to screen
+                    submitted news articles and helps ensure that
+                    potentially fake news is reviewed before publication.
+
+                </p>
+                {% if not user.is_authenticated %}
+                    <a
+                        href="/register/"
+                        class="btn btn-dark btn-lg mt-3"
+                    >
+                        Get Started
+                    </a>
+                {% elif user.role == "writer" %}
+                    <a
+                        href="/writer/dashboard/"
+                        class="btn btn-dark btn-lg mt-3"
+                    >
+                        Writer Dashboard
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h4>
+                            AI-Powered Verification
+                        </h4>
+                        <p class="text-muted mb-0">
+                            Every submitted article is analyzed
+                            by the trained fake-news detection model.
+                            Suspicious articles are flagged for
+                            administrator review.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container mb-5">
+    <div class="container mb-5">
+    <form method="GET">
+        <div class="row g-2">
+
+            <div class="col-md-7">
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search|default:'' }}"
+                    class="form-control"
+                    placeholder="Search articles..."
+                >
+            </div>
+            <div class="col-md-3">
+                <select
+                    name="category"
+                    class="form-select"
+                >
+                    <option value="">
+                        All Categories
+                    </option>
+                    {% for category in categories %}
+
+                        <option
+                            value="{{ category.id }}"
+                        >
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button
+                    type="submit"
+                    class="btn btn-dark w-100"
+                >
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            Latest Articles
+        </h2>
+    </div>
+
+    {% if articles %}
+        <div class="row g-4">
+            {% for article in articles %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card article-card h-100 shadow-sm">
+                        {% if article.image %}
+                            <img
+                                src="{{ article.image.url }}"
+                                class="card-img-top"
+                                style="height: 200px; object-fit: cover;"
+                            >
+                        {% endif %}
+                        <div class="card-body">
+                            {% if article.category %}
+                                <span class="badge bg-secondary mb-2">
+                                    {{ article.category.name }}
+                                </span>
+                            {% endif %}
+                            <h5 class="card-title">
+                             <a href="/article/{{ article.id }}/" class="text-decoration-none text-dark">
+                                    {{ article.title }}
+                             </a>
+                            </h5>
+                            <p class="card-text text-muted">
+                              {{ article.content|truncatewords:25 }}
+                             </p>
+                            <a href="/article/{{ article.id }}/" class="btn btn-sm btn-dark">
+                              Read Article
+                             </a>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <small class="text-muted">
+                                By {{ article.author.email }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <h4>
+                No published articles yet.
+            </h4>
+            <p class="text-muted">
+                Be the first writer to publish an article.
+            </p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
