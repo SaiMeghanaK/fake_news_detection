@@ -1,2 +1,52 @@
 # fake_news_detection
 A human in the loop fake news detection platform that combines XGBoost based NLP predictions with human verification to improve the reliability of news classification. Built with Django, DRF, PostgreSQL, and Bootstrap.
+This project is a news publishing and verification platform that combines **Machine Learning with Human Review** to reduce the risk of publishing potentially fake news. The platform allows writers to submit news articles, automatically analyzes submitted content using a trained **TF-IDF + XGBoost fake news detection model**, and routes suspicious articles to an administrator for manual verification.
+
+The key idea behind the project is:
+**AI assists the verification process, while the final publishing decision can remain with a human administrator.**
+
+The project provides three types of users:
+**Writer** — Creates and submits news articles.
+**Reader** — Reads verified and published articles.
+**Administrator** — Reviews articles flagged by the ML model and makes the final decision.
+
+When an article is predicted as **real**, it can be published automatically. When an article is predicted as **fake**, it is **not immediately rejected**. Instead, it is flagged and sent to the administrator for human review.
+The administrator can then:
+->Approve the article and publish it.
+->Reject the article and provide a reason.
+The writer receives a notification about the final decision.
+
+# Technology Stack
+## Machine Learning
+* Python
+* Pandas
+* NumPy
+* NLTK
+* BeautifulSoup
+* Scikit-learn
+* TF-IDF
+* XGBoost
+* Joblib
+* Matplotlib
+* Seaborn
+* WordCloud
+
+## Backend
+* Python
+* Django
+* Django REST Framework
+
+## Database
+* PostgreSQL
+  
+## Frontend
+* HTML
+* Bootstrap 5
+* JavaScript
+
+## Development Tools
+* Google Colab
+* Visual Studio Code
+
+# Machine Learning Pipeline
+The fake news detection model was trained separately in Google Colab and then integrated into the Django application.
