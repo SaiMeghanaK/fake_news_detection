@@ -4,6 +4,8 @@ This project is a news publishing and verification platform that combines **Mach
 
 The key idea behind the project is:
 **AI assists the verification process, while the final publishing decision can remain with a human administrator.**
+                    <img width="517" height="601" alt="image" src="https://github.com/user-attachments/assets/b2ca5a75-2936-45df-ada1-106a7ab5fb0c" />
+
 
 The project provides three types of users:
 **Writer** — Creates and submits news articles.
@@ -49,4 +51,7 @@ The writer receives a notification about the final decision.
 * Visual Studio Code
 
 # Machine Learning Pipeline
-The fake news detection model was trained separately in Google Colab and then integrated into the Django application.
+The fake news detection model was trained separately in Google Colab and then integrated into the Django application. The following process is used:
+<img width="281" height="612" alt="image" src="https://github.com/user-attachments/assets/fb6789f0-e32a-467b-b6f4-306906e909d3" />
+
+
