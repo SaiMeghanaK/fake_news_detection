@@ -64,7 +64,6 @@ This project uses the **WELFake Dataset** for training and evaluating the fake n
 * **Dataset:** WELFake Dataset
 * **Author:** Saurabh Shahane
 * **Source:** [Kaggle – Fake News Classification](https://www.kaggle.com/datasets/saurabhshahane/fake-news-classification)
-* **Original dataset:** The dataset combines multiple existing news datasets and contains news titles, article text, and labels.
 * **License:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 The dataset was used for academic/project purposes and was processed and transformed as part of this project, including text preprocessing, TF-IDF feature extraction, and model training using XGBoost.
