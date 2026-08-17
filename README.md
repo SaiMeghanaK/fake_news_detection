@@ -33,7 +33,6 @@ The writer receives a notification about the final decision.
 * Joblib
 * Matplotlib
 * Seaborn
-* WordCloud
 
 ## Backend
 * Python
